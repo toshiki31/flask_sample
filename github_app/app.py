@@ -6,13 +6,13 @@ from github import Github, GithubIntegration
 
 
 app = Flask(__name__)
-# MAKE SURE TO CHANGE TO YOUR APP NUMBER!!!!!
+# app_idを記入
 app_id = 324665
-# Read the bot certificate
+# 秘密鍵の読み取り
 with open("./private-key.pem") as cert_file:
     app_key = cert_file.read()
 
-# Create an GitHub integration instance
+# GitHub integrationのインスタンスを作成
 integration = GithubIntegration(
     app_id,
     app_key,
@@ -56,6 +56,6 @@ def bot():
         
     return "ok"
 
-
+#おまじない
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
