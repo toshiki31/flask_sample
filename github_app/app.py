@@ -26,8 +26,9 @@ integration = GithubIntegration(
 @app.route("/", methods=['POST'])
 def bot():
     payload = request.get_json()
+    #print(payload)
     keys = payload.keys()
-    if payload['action'] == 'opened':
+    if payload['action'] == 'opened' or payload['action'] == 'reopened':
         if "issue" in keys:
             installation_id = payload['installation']['id']
             repo_full_name = payload['repository']['full_name']
@@ -46,13 +47,16 @@ def bot():
             repo_full_name = payload['repository']['full_name']
             pull_request_number = payload['pull_request']['number']
             user = payload['pull_request']['user']['login']
+            pull_request_commit_id = payload['pull_request']['head']['sha']
+            #print(pull_request_commit_id)
 
             access_token = integration.get_access_token(installation_id).token
             github = Github(access_token)
 
             repo = github.get_repo(repo_full_name)
             pull_request = repo.get_pull(pull_request_number)
-            pull_request.create_comment('Hello, @{}!'.format(user))
+            commit_id = repo.get_commit(pull_request_commit_id)
+            pull_request.create_issue_comment('LGFM, @{}!'.format(user))
         
     return "ok"
 
