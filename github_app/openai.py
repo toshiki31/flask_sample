@@ -60,9 +60,10 @@ def bot():
             diff = pull_request.get_files()[0].patch
 
             # OpenAI APIを用いてレビュー生成
-            openai.api_key=os.environ['OPENAI_API_KEY']
+            #openai.api_key=os.environ["OPENAI_API_KEY"]
+            openai.api_key="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"
             prompt = f"Please review the following code in Japanese.:\n{diff}\nReview:"
-            response = openai.Completion.create(engine="text-davinci-002", prompt=prompt, max_tokens=1024)
+            response = openai.Completion.create(model="gpt-3.5-turbo", prompt=prompt, max_tokens=1024)
             review = response.choices[0].text.strip()
             pull_request.create_issue_comment(format(user), review)
         
