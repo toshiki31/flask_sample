@@ -30,20 +30,20 @@ def bot():
     #print(payload)
     keys = payload.keys()
     if payload['action'] == 'opened' or payload['action'] == 'reopened':
-        # if "issue" in keys:
-        #     installation_id = payload['installation']['id']
-        #     repo_full_name = payload['repository']['full_name']
-        #     issue_number = payload['issue']['number']
-        #     user = payload['issue']['user']['login']
+        if "issue" in keys:
+            installation_id = payload['installation']['id']
+            repo_full_name = payload['repository']['full_name']
+            issue_number = payload['issue']['number']
+            user = payload['issue']['user']['login']
 
-        #     access_token = integration.get_access_token(installation_id).token
-        #     github = Github(access_token)
+            access_token = integration.get_access_token(installation_id).token
+            github = Github(access_token)
 
-        #     repo = github.get_repo(repo_full_name)
-        #     issue = repo.get_issue(issue_number)
+            repo = github.get_repo(repo_full_name)
+            issue = repo.get_issue(issue_number)
 
-        #     issue.create_comment('Hello, @{}!'.format(user))
-        if "pull_request" in keys:
+            issue.create_comment('Hello, @{}!'.format(user))
+        elif "pull_request" in keys:
             installation_id = payload['installation']['id']
             repo_full_name = payload['repository']['full_name']
             pull_request_number = payload['pull_request']['number']
