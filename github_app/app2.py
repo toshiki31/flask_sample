@@ -68,7 +68,7 @@ def bot():
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "user", "content": "大谷翔平について教えて"},
+                    {"role": "user", "content": "大谷翔平について要約して教えて"},
                 ],
             )
             #print(response)

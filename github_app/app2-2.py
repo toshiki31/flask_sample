@@ -58,6 +58,7 @@ def bot():
 
             # プルリクエストのコードを取得
             diff = pull_request.get_files()[0].patch
+            #print("でぃふふふふふ" + diff)
 
             # OpenAI APIを用いてレビュー生成
             #openai.api_key=os.environ["OPENAI_API_KEY"]
@@ -68,7 +69,7 @@ def bot():
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "user", "content": f"Please review the following code in Japanese.\n{diff}"},
+                    {"role": "user", "content": "佐々木郎希について教えて"},
                 ],
             )
             review = response.choices[0]["message"]["content"]
