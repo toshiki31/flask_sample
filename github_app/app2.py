@@ -27,7 +27,7 @@ integration = GithubIntegration(
 @app.route("/", methods=['POST'])
 def bot():
     payload = request.get_json()
-    #print(payload)
+    # print(payload)
     keys = payload.keys()
     if payload['action'] == 'opened' or payload['action'] == 'reopened':
         if "issue" in keys:
@@ -61,11 +61,17 @@ def bot():
 
             # OpenAI APIを用いてレビュー生成
             #openai.api_key=os.environ["OPENAI_API_KEY"]
-            openai.api_key="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"
-            prompt = f"Please review the following code in Japanese.:\n{diff}\nReview:"
-            response = openai.Completion.create(model="gpt-3.5-turbo", prompt=prompt, max_tokens=1024)
-            review = response.choices[0].text.strip()
-            pull_request.create_issue_comment(format(user), review)
+            openai.api_key="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"
+            # question= f"Please review the following code in Japanese.:\n{diff}\nReview:"
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "user", "content": "大谷翔平について教えて"},
+                ],
+            )
+            #print(response)
+            review = response.choices[0]["message"]["content"]
+            pull_request.create_issue_comment(review)
         
     return "ok"
 
