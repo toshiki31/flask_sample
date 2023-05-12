@@ -10,7 +10,7 @@ app = Flask(__name__)
 # app_idを記入
 app_id = 324665
 # 秘密鍵の読み取り
-with open("./private-key.pem") as cert_file:
+with open("./private-app-key.pem") as cert_file:
     app_key = cert_file.read()
 
 # GitHub integrationのインスタンスを作成
@@ -56,7 +56,7 @@ def bot():
             repo = github.get_repo(repo_full_name)
             pull_request = repo.get_pull(pull_request_number)
 
-            # プルリクエストのコードを取得
+            # 差分を取得
             diff = pull_request.get_files()[0].patch
             print(diff)
 
