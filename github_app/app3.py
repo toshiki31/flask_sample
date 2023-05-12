@@ -62,15 +62,16 @@ def bot():
             # OpenAI APIを用いてレビュー生成
             #openai.api_key=os.environ["OPENAI_API_KEY"]
             openai.api_key="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"
-            prompt= f"Please review the following code in Japanese.:\n{diff}\nReview:"
+            #prompt= f"Please review the following code in Japanese.:\n{diff}\nReview:"
 
             #gpt-3.5-turboを使うならChatCompletionを使う
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
-                prompt=prompt,
-                max_token=1024
+                messages=[
+                    {"role": "user", "content": f"Please review the following code in Japanese.\n{diff}"},
+                ],
             )
-            review = response.choices[0].text.strip()
+            review = response.choices[0]["message"]["content"]
             pull_request.create_issue_comment(review)
         
     return "ok"
