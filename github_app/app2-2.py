@@ -58,21 +58,18 @@ def bot():
 
             # プルリクエストのコードを取得
             diff = pull_request.get_files()[0].patch
+            print(diff)
 
             # OpenAI APIを用いてレビュー生成
-            #openai.api_key=os.environ["OPENAI_API_KEY"]
-            openai.api_key="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"
-            # question= f"Please review the following code in Japanese.:\n{diff}\nReview:"
+            openai.api_key=os.environ["OPENAI_API_KEY"]
 
             #gpt-3.5-turboを使うならChatCompletionを使う
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "user", "content": "大谷翔平について要約して教えて"},
+                    {"role": "user", "content": f"このコードの問題点を挙げて下さい:\n{diff}\nReview:"},
                 ],
             )
-            #print(response)
-            #["messages"]ではなく["message"]
             review = response.choices[0]["message"]["content"]
             pull_request.create_issue_comment(review)
         
