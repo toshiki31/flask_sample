@@ -29,7 +29,7 @@ def bot():
     payload = request.get_json()
     # print(payload)
     keys = payload.keys()
-    if payload['action'] == 'opened' or payload['action'] == 'reopened':
+    if payload['action'] == 'opened' or payload['action'] == 'reopened' or payload['action'] == 'edited':
         if "issue" in keys:
             installation_id = payload['installation']['id']
             repo_full_name = payload['repository']['full_name']
